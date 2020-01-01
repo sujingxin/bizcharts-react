@@ -2,13 +2,13 @@ import React, { forwardRef, useImperativeHandle, Ref, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { Chart, Geom, Axis, Tooltip, Legend, Coord } from 'bizcharts';
-import { Spin } from 'antd';
+// import { Chart, Geom, Axis, Tooltip, Legend, Coord } from 'bizcharts';
+// import { Spin } from 'antd';
 import Line from './line';
 import Bar from './bar';
 
-const numeral = require('numeral')
-const DataSet = require('@antv/data-set');
+// const numeral = require('numeral')
+// const DataSet = require('@antv/data-set');
 
 const scData = [];
 // const xhData = []
@@ -20,13 +20,6 @@ for (let i = 0; i < 30; i += 1) {
         // A3: Math.floor(Math.random() * 1000) + 200,
     })
     console.log(scData)
-    // xhData.push({
-    //     x: i + 1,
-    //     T1: Math.floor(Math.random() * 1000) + 200,
-    //     T2: Math.floor(Math.random() * 1000) + 200,
-    //     T3: Math.floor(Math.random() * 1000) + 200,
-    //     T4: Math.floor(Math.random() * 1000) + 200,
-    // });
 }
 
 
