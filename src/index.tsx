@@ -16,33 +16,41 @@ for (let i = 0; i < 30; i += 1) {
     scData.push({
         x: i + 1,
         A1: Math.floor(Math.random() * 1000) + 200,
-        // A2: Math.floor(Math.random() * 1000) + 200,
-        // A3: Math.floor(Math.random() * 1000) + 200,
+        A2: Math.floor(Math.random() * 1000) + 200,
+        A3: Math.floor(Math.random() * 1000) + 200,
     })
-    console.log(scData)
 }
+console.log(scData)
 
+const data = [
+    {
+      name: "London",
+      "Jan": 18.9,
+      "Feb": 28.8,
+      "Mar": 39.3,
+      "Apr": 81.4,
+      'May': 47,
+      "Jun": 20.3,
+      "Jul": 24,
+      "Aug": 35.6
+    },
+    {
+      name: "Berlin",
+      "Jan": 12.4,
+      "Feb": 23.2,
+      "Mar": 34.5,
+      "Apr": 99.7,
+      'May': 52.6,
+      "Jun": 35.5,
+      "Jul": 37.4,
+      "Aug": 42.4
+    }
+  ];
 
 ReactDOM.render(<Line title="生成统计" data={scData} titleMap={{ A1: '机器人1', A2: '机器人2', A3: '机器人3' }} />
     , document.getElementById('root'));
 
-const data = [
-    { month: 'Jan.', count: 69, city: 'tokyo' },
-    { month: 'feb.', count: 45, city: 'fff' },
-    { month: 'mar.', count: 4, city: 'tokyo' },
-    { month: 'apr.', count: 65, city: 'tokyo' },
-    { month: 'may.', count: 36, city: 'tokyo' },
-    { month: 'jun.', count: 99, city: 'tokyo' },
-    { month: 'jul.', count: 81, city: 'tokyo' },
-    { month: 'aug.', count: 45, city: 'tokyo' },
-    { month: 'sep.', count: 69, city: 'tokyo' },
-    { month: 'oct.', count: 27, city: 'tokyo' },
-    { month: 'nov.', count: 4, city: 'tokyo' },
-    { month: 'dec.', count: 85, city: 'tokyo' }
-];
-
-
-ReactDOM.render(<Bar data={data} titleMap={{ month: '月份' }} />
+ReactDOM.render(<Bar title="降雨统计图" data={data} titleMap={{ Jan: 'Jan.', Feb: 'Feb.',Mar:"Mar.",Apr:"Apr.",May:'May',Jun:"Jun.",Jul:"Jul.",Aug:"Aug."}} />
     , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

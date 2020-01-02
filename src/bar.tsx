@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import {
     G2, Chart, Geom, Axis, Tooltip, Coord, Label, Legend, View, Guide, Facet, Util
 } from "bizcharts";
+import { Spin } from 'antd';
 
-const numeral = require('numeral');
 const DataSet = require('@antv/data-set');
 
 interface BarProps {
@@ -31,10 +31,13 @@ function BarFc(props: BarProps, ref: Ref<any>) {
         title,
         data,
         titleMap,
-        height = 300,
+        height = 400,
         forceFit = true,
         padding = 'auto',
-        alias = {},
+        alias = {
+            x: 'x',
+            y: 'value'
+        }
     } = props;
     const [loading, setLoading] = useState<boolean>(false);
     const changeLoadingState = (status: boolean) => {
@@ -47,19 +50,14 @@ function BarFc(props: BarProps, ref: Ref<any>) {
     // 配置数据比例尺，该配置会影响数据在图表中的展示方式
     // alias: string, // 数据字段的别名，会影响到轴的标题内容
     const scale = {
-        x: {
-            range: [0, 1],
-            alias: alias.x,
-        },
-        value: {
-            min: 0,
-            alias: alias.y,
-        },
+        sales: {
+            tickInterval: 20,   // 设置坐标轴上刻度点的个数
+            alias, // 数据字段的别名，会影响到轴的标题内容
+        }
     };
 
     const ds = new DataSet();
-    const dv = ds.createView();
-    console.log('====', dv)
+    const dv = ds.createView().source(data);
     dv.source(data)
         .transform({
             type: 'map',
@@ -73,19 +71,29 @@ function BarFc(props: BarProps, ref: Ref<any>) {
         })
         .transform({
             type: 'fold',
-            fields: Object.keys(titleMap).map(key => titleMap[key]),
-            key: 'key',
+            fields: Object.keys(titleMap).map((key) => titleMap[key]),
+            key: 'x',
             value: 'value',
         });
 
     return (
-        <Chart height={400} data={dv} scale={scale} padding={padding} forceFit={forceFit}>
-            <Axis title={alias.x} name="x" />
-            <Axis title={alias.y} name="count" />
-            <Legend />
-            <Tooltip crosshairs={{ type: 'rect' }} />
-            <Geom type="interval" position="month*count" color="month" />
-        </Chart>
+        <div>
+            <h4 style={{ textAlign: "center" }}>{title}</h4>
+            <Spin spinning={loading} tip="加载中...">
+                <Chart height={height} data={dv} scale={scale} padding={padding} forceFit={forceFit}>
+                    <Axis title={alias.x} name={alias.x} />
+                    <Axis title={alias.y} name={alias.y} />
+                    <Legend />
+                    <Tooltip crosshairs={{ type: 'rect' }} />
+                    <Geom type="interval" position="x*value" color="name" adjust={[
+                        {
+                            type: "dodge",
+                            marginRatio: 1 / 32
+                        }
+                    ]} />
+                </Chart>
+            </Spin>
+        </div>
     );
 }
 
