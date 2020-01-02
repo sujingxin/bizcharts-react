@@ -7,6 +7,13 @@ import { Spin } from 'antd';
 
 const DataSet = require('@antv/data-set');
 
+// 全局图表主题切换
+// const { Global } = G2;  // 获取 Global 全局对象
+// Global.setTheme('dark');  // 传入值为 'default'、'dark'的一种，如果不是，那么使用 default 主题
+// Global.animate = false;  // 关闭默认动画
+// Global.colors=['red', 'blue', 'yellow']; // 更改默认颜色
+
+
 interface BarProps {
     title?: React.ReactNode;
     data: Array<{
@@ -60,27 +67,18 @@ function BarFc(props: BarProps, ref: Ref<any>) {
     const dv = ds.createView().source(data);
     dv.source(data)
         .transform({
-            type: 'map',
-            callback(row: { [propName: string]: string | number }) {
-                const newRow = { ...row };
-                Object.keys(titleMap).forEach(key => {
-                    newRow[titleMap[key]] = row[key];
-                });
-                return newRow;
-            },
-        })
-        .transform({
             type: 'fold',
             fields: Object.keys(titleMap).map((key) => titleMap[key]),
             key: 'x',
             value: 'value',
+
         });
 
     return (
         <div>
             <h4 style={{ textAlign: "center" }}>{title}</h4>
             <Spin spinning={loading} tip="加载中...">
-                <Chart height={height} data={dv} scale={scale} padding={padding} forceFit={forceFit}>
+                <Chart height={height} theme="default" data={dv} scale={scale} padding={padding} forceFit={forceFit}>
                     <Axis title={alias.x} name={alias.x} />
                     <Axis title={alias.y} name={alias.y} />
                     <Legend />
